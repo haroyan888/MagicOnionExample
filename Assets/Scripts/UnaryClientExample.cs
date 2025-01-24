@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class ExecuteExample : MonoBehaviour
 {
+	[SerializeField]
+	string host;
+
 	async void Start()
 	{
-		IMyFirstService client = new RpcChanneler().Create<IMyFirstService>();
+		IMyFirstService client = RpcClientMaker.Create<IMyFirstService>(host);
 		var result = await client.SumAsync(1, 2);
 		Debug.Log($"Result: {result}");
 	}

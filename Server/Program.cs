@@ -11,7 +11,7 @@ static class Program
 		builder.WebHost.UseKestrel(options =>
 		{
 			options.ConfigureEndpointDefaults(endpointOptions =>
-					{
+				{
 					endpointOptions.Protocols = HttpProtocols.Http2;
 				});
 		});
@@ -20,6 +20,8 @@ static class Program
 		builder.Services.AddMagicOnion();
 
 		var app = builder.Build();
+
+		app.Urls.Add("http://0.0.0.0:5000");
 
 		app.MapMagicOnionService();
 

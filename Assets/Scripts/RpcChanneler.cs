@@ -2,9 +2,9 @@ using Cysharp.Net.Http;
 using Grpc.Net.Client;
 using MagicOnion.Client;
 
-public class RpcChanneler
+class RpcClientMaker
 {
-	public T Create<T>()
+	public static T Create<T>(string host)
 	where
 		T : MagicOnion.IService<T>
 	{
@@ -13,7 +13,7 @@ public class RpcChanneler
 		var options = new GrpcChannelOptions();
 		options.HttpHandler = handler;
 		options.UnsafeUseInsecureChannelCallCredentials = false;
-		var channel = GrpcChannel.ForAddress("http://localhost:5000", options);
+		var channel = GrpcChannel.ForAddress(host, options);
 		return MagicOnionClient.Create<T>(channel);
 	}
 }
