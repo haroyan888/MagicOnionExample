@@ -42,26 +42,40 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             _position += Vector3.up * _speed;
+            await _hub.MoveAsync(_position, new Quaternion());
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             _position += Vector3.down * _speed;
+            await _hub.MoveAsync(_position, new Quaternion());
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             _position += Vector3.left * _speed;
+            await _hub.MoveAsync(_position, new Quaternion());
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             _position += Vector3.right * _speed;
+            await _hub.MoveAsync(_position, new Quaternion());
         }
-
-        await _hub.MoveAsync(_position, new Quaternion());
 
         if (Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("Leave");
             await _hub.LeaveAsync();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            await _hub.LeaveAsync();
+            var id = Random.Range(0, 10000);
+            await _hub.ConnectAsync(_channel, "Room-1", $"Player-{id}");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            await _hub.LeaveAsync();
+            var id = Random.Range(0, 10000);
+            await _hub.ConnectAsync(_channel, "Room", $"Player-{id}");
         }
     }
 

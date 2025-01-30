@@ -29,7 +29,17 @@ public class GamingHubClient : IGamingHubReceiver
 
 	public ValueTask LeaveAsync()
 	{
+		foreach (var (_, player) in players)
+		{
+			if (player is null) return new ValueTask();
+			GameObject.Destroy(player);
+		}
 		return client.LeaveAsync();
+	}
+
+	public async ValueTask<GameObject> ChangeRoomAsync(ChannelBase grpcChannel, string roomName, string playerName)
+	{
+		return await ConnectAsync(grpcChannel, roomName, playerName);
 	}
 
 	public ValueTask MoveAsync(Vector3 position, Quaternion rotation)
