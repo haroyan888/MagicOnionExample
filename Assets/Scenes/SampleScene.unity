@@ -773,6 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 0.1
+  _serverUrl: http://localhost:5000
 --- !u!4 &1450351064
 Transform:
   m_ObjectHideFlags: 0
