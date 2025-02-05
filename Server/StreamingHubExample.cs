@@ -40,6 +40,7 @@ public class GamingHub : StreamingHubBase<IGamingHub, IGamingHubReceiver>, IGami
 	protected override ValueTask OnDisconnected()
 	{
 		// on disconnecting, if automatically removed this connection from group.
+		Broadcast(room).OnLeave(self);
 		return ValueTask.CompletedTask;
 	}
 }

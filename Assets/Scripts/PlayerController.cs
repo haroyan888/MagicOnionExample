@@ -1,7 +1,7 @@
 using UnityEngine;
 using Cysharp.Net.Http;
 using Grpc.Net.Client;
-using System.Threading.Tasks;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private float _speed = 0.1f;
     [SerializeField]
     private string _serverUrl = "http://localhost:5000";
+    [SerializeField]
+    private string playerName;
 
     void Awake()
     {
@@ -26,9 +28,8 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async void Start()
     {
-        var id = Random.Range(0, 10000);
         _hub = new GamingHubClient();
-        await _hub.ConnectAsync(_channel, "Room", $"Player-{id}");
+        await _hub.ConnectAsync(_channel, "Room", playerName);
     }
 
     // Update is called once per frame
@@ -68,14 +69,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             await _hub.LeaveAsync();
-            var id = Random.Range(0, 10000);
-            await _hub.ConnectAsync(_channel, "Room-1", $"Player-{id}");
+            await _hub.DisposeAsync();
+            await _hub.ConnectAsync(_channel, "Room-1", playerName);
         }
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             await _hub.LeaveAsync();
-            var id = Random.Range(0, 10000);
-            await _hub.ConnectAsync(_channel, "Room", $"Player-{id}");
+            await _hub.DisposeAsync();
+            await _hub.ConnectAsync(_channel, "Room", playerName);
         }
     }
 

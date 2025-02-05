@@ -29,11 +29,9 @@ public class GamingHubClient : IGamingHubReceiver
 
 	public ValueTask LeaveAsync()
 	{
-		foreach (var (_, player) in players)
-		{
-			if (player is null) return new ValueTask();
-			GameObject.Destroy(player);
-		}
+		foreach (var player in players)
+			Object.Destroy(player.Value);
+
 		return client.LeaveAsync();
 	}
 
